@@ -1,6 +1,7 @@
 "use client";
 import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { logIn } from "@/services/actions";
 
 const LoginForm = () => {
   const { Item } = Form;
@@ -10,6 +11,7 @@ const LoginForm = () => {
       className="login-form"
       initialValues={{ remember: true }}
       style={{ maxWidth: "300px", margin: "auto", paddingTop: "50px" }}
+      onFinish={logIn}
     >
       <Item
         name="username"
