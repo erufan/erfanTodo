@@ -21,17 +21,17 @@ const ToDoCard = ({ toDotitle, isCompleted, userId }: Props) => {
         borderRadius: "10px",
         overflow: "hidden",
         boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
       }}
     >
-      <p>
-        <b>Task:</b> {toDotitle}
-      </p>
-      <p>
-        <b>Completed:</b> {isCompleted ? "Yes" : "No"}
-      </p>
-      <p>
-        <b>User:</b> {userId}
-      </p>
+      <b>Task:</b>
+      <p>{toDotitle}</p>
+      <b>Completed:</b>
+      <p>{isCompleted ? "Yes" : "No"}</p>
+      <b>User:</b>
+      <p>{userId}</p>
     </Card>
   );
 };
