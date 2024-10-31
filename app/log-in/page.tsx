@@ -41,13 +41,7 @@ const LoginForm = () => {
       </Item>
       {error && (
         <Item>
-          <Alert
-            message={
-              "wrong password and username : please check your username and password"
-            }
-            type="error"
-            showIcon
-          />
+          <Alert message={error} type="error" showIcon />
         </Item>
       )}
       <Item style={{ display: "flex", justifyContent: "center" }}>
