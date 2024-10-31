@@ -1,6 +1,6 @@
 "use server";
 
-import User from "@/interface/user";
+import User from "@/interface/User";
 
 export async function logIn(user: User) {
   try {

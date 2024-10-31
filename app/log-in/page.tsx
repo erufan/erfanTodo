@@ -3,8 +3,8 @@ import { Form, Input, Button, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { logIn } from "@/services/actions";
 import { useState } from "react";
-import MyError from "@/interface/error";
-import User from "@/interface/user";
+import MyError from "@/interface/MyError";
+import User from "@/interface/User";
 
 const LoginForm = () => {
   const [error, setError] = useState("");
