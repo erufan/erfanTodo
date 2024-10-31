@@ -1,9 +1,19 @@
 "use client";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { logIn } from "@/services/actions";
+import { useState } from "react";
+import MyError from "@/interface/error";
+import User from "@/interface/user";
 
 const LoginForm = () => {
+  const [error, setError] = useState("");
+  const handleOnFinish = async function (user: User) {
+    const response: MyError = await logIn(user);
+
+    !response.success && setError(response.message);
+  };
+
   const { Item } = Form;
   return (
     <Form
@@ -11,7 +21,7 @@ const LoginForm = () => {
       className="login-form"
       initialValues={{ remember: true }}
       style={{ maxWidth: "300px", margin: "auto", paddingTop: "50px" }}
-      onFinish={logIn}
+      onFinish={handleOnFinish}
     >
       <Item
         name="username"
@@ -29,6 +39,17 @@ const LoginForm = () => {
           placeholder="Password"
         />
       </Item>
+      {error && (
+        <Item>
+          <Alert
+            message={
+              "wrong password and username : please check your username and password"
+            }
+            type="error"
+            showIcon
+          />
+        </Item>
+      )}
       <Item style={{ display: "flex", justifyContent: "center" }}>
         <Button type="primary" htmlType="submit" className="login-form-button">
           Log in
