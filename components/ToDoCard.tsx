@@ -1,9 +1,15 @@
 import { Button, Card } from "antd";
 
-const ToDoCard = () => {
+interface Props {
+  toDotitle: string;
+  isCompleted: boolean;
+  userId: number;
+}
+
+const ToDoCard = ({ toDotitle, isCompleted, userId }: Props) => {
   return (
     <Card
-      title="To-Do"
+      title={toDotitle}
       extra={
         <>
           <Button type="primary"> Edit </Button>
@@ -18,13 +24,13 @@ const ToDoCard = () => {
       }}
     >
       <p>
-        <b>Task:</b> {"todo.text"}
+        <b>Task:</b> {toDotitle}
       </p>
       <p>
-        <b>Completed:</b> {true ? "Yes" : "No"}
+        <b>Completed:</b> {isCompleted ? "Yes" : "No"}
       </p>
       <p>
-        <b>User:</b> {"erfan"}
+        <b>User:</b> {userId}
       </p>
     </Card>
   );
