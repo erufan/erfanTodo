@@ -1,10 +1,14 @@
 "use client";
 
+import { addToDo } from "@/services/actions";
 import { Form, Input, Button } from "antd";
+import { useRouter } from "next/navigation";
 
 const { Item } = Form;
 
 const AddTaskPage = () => {
+  const router = useRouter();
+
   return (
     <dialog
       style={{
@@ -20,11 +24,13 @@ const AddTaskPage = () => {
         alignItems: "center",
       }}
       open
+      onClick={router.back}
     >
       <Form
         name="login_form"
         className="login-form"
         initialValues={{ remember: true }}
+        onFinish={addToDo}
         style={{
           margin: "auto",
           paddingTop: "50px",
