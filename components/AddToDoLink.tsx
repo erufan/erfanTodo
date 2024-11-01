@@ -7,6 +7,7 @@ const AddToDoLink = () => {
     <Link
       href={"/add-task"}
       style={{ zIndex: 1, position: "fixed", display: "inline" }}
+      scroll={false}
     >
       <Affix offsetBottom={20}>
         <Button
