@@ -42,6 +42,7 @@ const AddTaskPage = () => {
           maxWidth: "50rem",
           width: "100%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <Item
           name="toDo"
