@@ -1,4 +1,5 @@
 import ToDo from "@/interface/ToDo";
+import fetchWithToken from "./fetchWithToken";
 
 interface Data {
   todos: ToDo[];
@@ -8,7 +9,10 @@ interface Data {
 }
 
 const getToDoList = async () => {
-  const respone = await fetch("https://dummyjson.com/todos?limit=20&skip=0");
+  const respone = await fetchWithToken(
+    "https://dummyjson.com/todos?limit=20&skip=0"
+  );
+
   const data: Data = await respone.json();
 
   return data.todos;
