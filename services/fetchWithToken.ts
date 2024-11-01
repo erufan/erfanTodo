@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import refreshAccessToken from "./refreshAccessToken";
 
 interface FetchOptions {
   headers?: { [key: string]: string };
@@ -7,14 +8,29 @@ interface FetchOptions {
 }
 
 async function fetchWithToken(url: string, options: FetchOptions = {}) {
-  const token = cookies().get("token")?.value;
+  let token = cookies().get("token")?.value;
 
   const headers = {
     ...options.headers,
     Authorization: `Bearer ${token}`,
   };
 
-  const response = await fetch(url, { ...options, headers });
+  let response = await fetch(url, { ...options, headers });
+
+  if (response.status === 401) {
+    const newTokens = await refreshAccessToken();
+    if (newTokens && newTokens.accessToken) {
+      token = cookies().get("token")?.value;
+
+      const newHeaders = {
+        ...options.headers,
+        Authorization: `Bearer ${token}`,
+      };
+
+      response = await fetch(url, { ...options, headers: newHeaders });
+    }
+  }
+
   return response;
 }
 
