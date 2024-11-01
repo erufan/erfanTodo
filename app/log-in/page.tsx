@@ -3,15 +3,14 @@ import { Form, Input, Button, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { logIn } from "@/services/actions";
 import { useState } from "react";
-import MyError from "@/interface/MyError";
 import User from "@/interface/User";
 
 const LoginForm = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | undefined>("");
   const handleOnFinish = async function (user: User) {
-    const response: MyError = await logIn(user);
+    const response = await logIn(user);
 
-    !response.success && setError(response.message);
+    setError(response?.message);
   };
 
   const { Item } = Form;
