@@ -4,10 +4,11 @@ import User from "@/interface/User";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import fetchWithToken from "./fetchWithToken";
+import { jwtDecode } from "jwt-decode";
 
 export async function logIn(user: User) {
   try {
-    const response = await fetchWithToken("https://dummyjson.com/auth/login", {
+    const response = await fetch("https://dummyjson.com/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,8 +19,16 @@ export async function logIn(user: User) {
 
     if (!response.ok) return { success: false, message: data!.message };
 
-    if (data.accessToken && response.ok)
-      cookies().set("token", data.accessToken);
+    if (data.accessToken && response.ok) {
+      cookies().set("token", data.accessToken, {
+        httpOnly: true,
+        secure: true,
+      });
+      cookies().set("token", data.refreshToken!, {
+        httpOnly: true,
+        secure: true,
+      });
+    }
   } catch (error) {
     console.error("Login error:", error);
     return {
@@ -28,4 +37,33 @@ export async function logIn(user: User) {
     };
   }
   redirect("/");
+}
+
+export async function addToDo(toDo: { toDo: string }) {
+  let token = cookies().get("token");
+  if (!token) redirect("/log-in");
+
+  const { id }: { id: number } = jwtDecode(token.value);
+
+  try {
+    const response = await fetchWithToken("https://dummyjson.com/todos/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...toDo, userId: id }),
+    });
+
+    if (response.status === 401) redirect("/log-in");
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("Login error:", error);
+    return {
+      success: false,
+      message: "An unknown error occurred. Please try again.",
+    };
+  }
 }

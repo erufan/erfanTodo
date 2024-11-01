@@ -1,13 +1,29 @@
 "use client";
 
 import { addToDo } from "@/services/actions";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const { Item } = Form;
 
 const AddTaskPage = () => {
+  const [loading, setLoading] = useState(false);
+  const [userResponse, setUserResponse] = useState<string | undefined>();
   const router = useRouter();
+
+  const handleOnFinish = async (toDo: { toDo: string }) => {
+    setLoading(true);
+    const data = await addToDo(toDo);
+
+    data && setLoading(false);
+
+    if (data.message) setUserResponse(data.message);
+    else {
+      setUserResponse("to-do add successfully 💹");
+      setTimeout(() => router.back(), 2000);
+    }
+  };
 
   return (
     <dialog
@@ -30,7 +46,7 @@ const AddTaskPage = () => {
         name="login_form"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={addToDo}
+        onFinish={handleOnFinish}
         style={{
           margin: "auto",
           paddingTop: "50px",
@@ -55,10 +71,12 @@ const AddTaskPage = () => {
             type="primary"
             htmlType="submit"
             className="login-form-button"
+            disabled={loading}
           >
-            Add
+            {loading ? "Sending..." : "Add"}
           </Button>
         </Item>
+        {userResponse && userResponse}
       </Form>
     </dialog>
   );
