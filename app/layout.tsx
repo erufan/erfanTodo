@@ -1,7 +1,6 @@
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import type { Metadata } from "next";
 import "./globals.css";
-import AddToDoLink from "@/components/AddToDoLink";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +20,6 @@ export default function RootLayout({
         <AntdRegistry>
           {add}
           {children}
-          <AddToDoLink />
         </AntdRegistry>
       </body>
     </html>
