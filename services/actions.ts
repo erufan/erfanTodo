@@ -1,6 +1,8 @@
 "use server";
 
 import User from "@/interface/User";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function logIn(user: User) {
   try {
@@ -11,20 +13,18 @@ export async function logIn(user: User) {
       },
       body: JSON.stringify(user),
     });
+    const data: LogInUser = await response.json();
 
-    const data = await response.json();
+    if (!response.ok) return { success: false, message: data!.message };
 
-    return data;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Login error:", error.message);
-      return { success: false, message: error.message };
-    } else {
-      console.error("Unknown error:", error);
-      return {
-        success: false,
-        message: "An unknown error occurred. Please try again.",
-      };
-    }
+    if (data.accessToken && response.ok)
+      cookies().set("token", data.accessToken);
+  } catch (error) {
+    console.error("Login error:", error);
+    return {
+      success: false,
+      message: "An unknown error occurred. Please try again.",
+    };
   }
+  redirect("/");
 }
