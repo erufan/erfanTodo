@@ -10,13 +10,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+  add,
+}: {
   children: React.ReactNode;
-}>) {
+  add: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
         <AntdRegistry>
+          {add}
           {children}
           <AddToDoLink />
         </AntdRegistry>

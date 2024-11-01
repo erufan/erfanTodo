@@ -4,12 +4,13 @@ import Link from "next/link";
 
 const AddToDoLink = () => {
   return (
-    <Link href={"/add-task"}>
+    <Link
+      href={"/add-task"}
+      style={{ zIndex: 1, position: "fixed", display: "inline" }}
+    >
       <Affix offsetBottom={20}>
         <Button
           style={{
-            width: 60,
-            height: 60,
             fontSize: 24,
           }}
           type="primary"
