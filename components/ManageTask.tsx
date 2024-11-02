@@ -22,8 +22,9 @@ const ManageTask = <T extends ToDo>({
     defaultValus?.completed || false
   );
   const router = useRouter();
+  let buttonText = defaultValus ? "Edit" : "Add";
 
-  const handleOnFinish = async (formData: Input) => {
+  async function handleOnFinish(formData: Input) {
     setLoading(true);
 
     const data = await serverAction(
@@ -38,7 +39,7 @@ const ManageTask = <T extends ToDo>({
       setUserResponse("The operation was successful 💹");
       setTimeout(() => router.back(), 2000);
     }
-  };
+  }
 
   return (
     <dialog
@@ -98,7 +99,7 @@ const ManageTask = <T extends ToDo>({
             className="login-form-button"
             disabled={loading}
           >
-            {loading ? "Sending..." : "Add"}
+            {loading ? "Sending..." : buttonText}
           </Button>
         </Item>
         {userResponse && userResponse}
