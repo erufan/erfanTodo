@@ -96,7 +96,7 @@ export async function updateToDo(toDo: { toDo: string }, toDoId?: number) {
   }
 }
 
-export async function deleteToDo(toDoId?: number) {
+export async function deleteToDo(toDoId: number) {
   let token = cookies().get("token");
   if (!token) redirect("/log-in");
 

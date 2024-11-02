@@ -1,8 +1,8 @@
-import AddToDo from "@/components/AddToDo";
+import ManageTask from "@/components/ManageTask";
 import { addToDo } from "@/services/actions";
 
 const AddTaskPage = () => {
-  return <AddToDo serverAction={addToDo} />;
+  return <ManageTask serverAction={addToDo} />;
 };
 
 export default AddTaskPage;

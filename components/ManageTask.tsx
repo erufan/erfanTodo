@@ -1,26 +1,26 @@
 "use client";
 
+import Input from "@/interface/Input";
 import ToDo from "@/interface/ToDo";
-import { Form, Input, Button } from "antd";
+import { Form, Input as AntdInput, Button } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 const { Item } = Form;
 
-interface input {
-  toDo: string;
-}
-
 interface Props<T> {
-  serverAction: (formData: input, toDoID?: number) => Promise<any>;
+  serverAction: (formData: Input, toDoID?: number) => Promise<any>;
   defaultValus?: T;
 }
 
-const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
+const ManageTask = <T extends ToDo>({
+  serverAction,
+  defaultValus,
+}: Props<T>) => {
   const [loading, setLoading] = useState(false);
   const [userResponse, setUserResponse] = useState<string | undefined>();
   const router = useRouter();
 
-  const handleOnFinish = async (formData: input) => {
+  const handleOnFinish = async (formData: Input) => {
     setLoading(true);
     const data = await serverAction(formData, defaultValus?.id);
 
@@ -72,7 +72,7 @@ const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
           name="todo"
           rules={[{ required: true, message: "Please input your to-do!" }]}
         >
-          <Input placeholder="type to-do ..." />
+          <AntdInput placeholder="type to-do ..." />
         </Item>
         <Item style={{ display: "flex", justifyContent: "center" }}>
           <Button
@@ -90,4 +90,4 @@ const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
   );
 };
 
-export default AddToDo;
+export default ManageTask;

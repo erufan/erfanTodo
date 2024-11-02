@@ -1,4 +1,4 @@
-import AddToDo from "@/components/AddToDo";
+import ManageTask from "@/components/ManageTask";
 import { updateToDo } from "@/services/actions";
 import getToDoList from "@/services/getToDoById";
 
@@ -9,7 +9,7 @@ interface Props {
 const ToDoDetailsPage = async ({ params }: Props) => {
   const toDo = await getToDoList(params.id);
 
-  return <AddToDo serverAction={updateToDo} defaultValus={toDo} />;
+  return <ManageTask serverAction={updateToDo} defaultValus={toDo} />;
 };
 
 export default ToDoDetailsPage;
