@@ -10,8 +10,8 @@ interface Data {
 
 const getToDoList = async () => {
   const respone = await fetchWithToken(
-    "https://dummyjson.com/todos?limit=20&skip=0"
-  );
+    "https://dummyjson.com/todos?limit=300&skip=0"
+  ); // I know this isn't efficient, but due to the mock database and constant of only 254 todos, this should suffice for now.
 
   const data: Data = await respone.json();
 
