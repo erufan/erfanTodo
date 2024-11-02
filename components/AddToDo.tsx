@@ -11,7 +11,7 @@ interface input {
 }
 
 interface Props<T> {
-  serverAction: (formData: input) => Promise<any>;
+  serverAction: (formData: input, toDoID?: number) => Promise<any>;
   defaultValus?: T;
 }
 
@@ -22,7 +22,7 @@ const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
 
   const handleOnFinish = async (formData: input) => {
     setLoading(true);
-    const data = await serverAction(formData);
+    const data = await serverAction(formData, defaultValus?.id);
 
     data && setLoading(false);
 
@@ -69,7 +69,7 @@ const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
         onClick={(e) => e.stopPropagation()}
       >
         <Item
-          name="toDo"
+          name="todo"
           rules={[{ required: true, message: "Please input your to-do!" }]}
         >
           <Input

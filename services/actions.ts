@@ -67,3 +67,31 @@ export async function addToDo(toDo: { toDo: string }) {
     };
   }
 }
+
+export async function updateToDo(toDo: { toDo: string }, toDoId?: number) {
+  let token = cookies().get("token");
+  if (!token) redirect("/log-in");
+
+  try {
+    const response = await fetchWithToken(
+      `https://dummyjson.com/todos/${toDoId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(toDo),
+      }
+    );
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("Login error:", error);
+    return {
+      success: false,
+      message: "An unknown error occurred. Please try again.",
+    };
+  }
+}

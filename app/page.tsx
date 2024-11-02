@@ -19,6 +19,7 @@ const HomePage = async () => {
               toDotitle={toDo.todo}
               isCompleted={toDo.completed}
               userId={toDo.userId}
+              toDoid={toDo.id}
             />
           </Col>
         ))}

@@ -1,18 +1,22 @@
 import { Button, Card } from "antd";
+import Link from "next/link";
 
 interface Props {
   toDotitle: string;
   isCompleted: boolean;
   userId: number;
+  toDoid: number;
 }
 
-const ToDoCard = ({ toDotitle, isCompleted, userId }: Props) => {
+const ToDoCard = ({ toDotitle, isCompleted, userId, toDoid }: Props) => {
   return (
     <Card
       title={toDotitle}
       extra={
         <>
-          <Button type="primary"> Edit </Button>
+          <Link href={`/add-task/${toDoid}`}>
+            <Button type="primary"> Edit </Button>
+          </Link>
           <Button style={{ marginLeft: 8 }}>Delete</Button>
         </>
       }
