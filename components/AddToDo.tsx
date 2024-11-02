@@ -53,7 +53,7 @@ const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
       <Form
         name="login_form"
         className="login-form"
-        initialValues={{ remember: true }}
+        initialValues={defaultValus}
         onFinish={handleOnFinish}
         style={{
           margin: "auto",
@@ -72,10 +72,7 @@ const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
           name="todo"
           rules={[{ required: true, message: "Please input your to-do!" }]}
         >
-          <Input
-            placeholder="type to-do ..."
-            defaultValue={defaultValus?.todo}
-          />
+          <Input placeholder="type to-do ..." />
         </Item>
         <Item style={{ display: "flex", justifyContent: "center" }}>
           <Button

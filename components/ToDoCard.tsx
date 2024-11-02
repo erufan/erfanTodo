@@ -14,7 +14,7 @@ const ToDoCard = ({ toDotitle, isCompleted, userId, toDoid }: Props) => {
       title={toDotitle}
       extra={
         <>
-          <Link href={`/add-task/${toDoid}`}>
+          <Link href={`/add-task/${toDoid}`} scroll={false}>
             <Button type="primary"> Edit </Button>
           </Link>
           <Button style={{ marginLeft: 8 }}>Delete</Button>
