@@ -1,18 +1,18 @@
 "use client";
 
+import ToDo from "@/interface/ToDo";
 import { Form, Input, Button } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 const { Item } = Form;
 
-interface Props<T> {
-  serverAction: (formData: T) => Promise<any>;
-  defaultValus?: T;
+interface input {
+  toDo: string;
 }
 
-interface ToDo {
-  toDo: string;
-  isCompleted: boolean;
+interface Props<T> {
+  serverAction: (formData: input) => Promise<any>;
+  defaultValus?: T;
 }
 
 const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
@@ -20,7 +20,7 @@ const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
   const [userResponse, setUserResponse] = useState<string | undefined>();
   const router = useRouter();
 
-  const handleOnFinish = async (formData: T) => {
+  const handleOnFinish = async (formData: input) => {
     setLoading(true);
     const data = await serverAction(formData);
 
@@ -74,7 +74,7 @@ const AddToDo = <T extends ToDo>({ serverAction, defaultValus }: Props<T>) => {
         >
           <Input
             placeholder="type to-do ..."
-            defaultValue={defaultValus?.toDo}
+            defaultValue={defaultValus?.todo}
           />
         </Item>
         <Item style={{ display: "flex", justifyContent: "center" }}>
