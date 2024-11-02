@@ -1,4 +1,5 @@
 import AddToDoLink from "@/components/AddToDoLink";
+import LogOutButton from "@/components/LogOutButton";
 import TableToDo from "@/components/TableToDo";
 import getToDoList from "@/services/getToDoList";
 
@@ -7,6 +8,7 @@ const HomePage = async () => {
 
   return (
     <>
+      <LogOutButton />
       <TableToDo dataSource={toDoList} />
       <AddToDoLink />
     </>

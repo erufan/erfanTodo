@@ -73,8 +73,6 @@ export async function updateToDo(toDo: Input, toDoId?: number) {
   let token = cookies().get("token");
   if (!token) redirect("/log-in");
 
-  console.log(toDo);
-
   try {
     const response = await fetchWithToken(
       `https://dummyjson.com/todos/${toDoId}`,
@@ -126,4 +124,9 @@ export async function deleteToDo(toDoId: number) {
       message: "An unknown error occurred. Please try again.",
     };
   }
+}
+
+export async function logOut() {
+  cookies().delete("token");
+  cookies().delete("refreshToken");
 }
