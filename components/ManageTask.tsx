@@ -2,7 +2,7 @@
 
 import Input from "@/interface/Input";
 import ToDo from "@/interface/ToDo";
-import { Form, Input as AntdInput, Button } from "antd";
+import { Form, Input as AntdInput, Button, Checkbox } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 const { Item } = Form;
@@ -18,11 +18,18 @@ const ManageTask = <T extends ToDo>({
 }: Props<T>) => {
   const [loading, setLoading] = useState(false);
   const [userResponse, setUserResponse] = useState<string | undefined>();
+  const [completed, setCompleted] = useState<boolean>(
+    defaultValus?.completed || false
+  );
   const router = useRouter();
 
   const handleOnFinish = async (formData: Input) => {
     setLoading(true);
-    const data = await serverAction(formData, defaultValus?.id);
+
+    const data = await serverAction(
+      { ...formData, completed },
+      defaultValus?.id
+    );
 
     data && setLoading(false);
 
@@ -74,6 +81,16 @@ const ManageTask = <T extends ToDo>({
         >
           <AntdInput placeholder="type to-do ..." />
         </Item>
+        {defaultValus && (
+          <Item name="completed">
+            <Checkbox
+              checked={completed}
+              onChange={() => setCompleted((prevCom) => !prevCom)}
+            >
+              Completed
+            </Checkbox>
+          </Item>
+        )}
         <Item style={{ display: "flex", justifyContent: "center" }}>
           <Button
             type="primary"

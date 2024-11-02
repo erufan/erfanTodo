@@ -1,5 +1,6 @@
 interface Input {
-  toDo: string;
+  todo: string;
+  completed: boolean;
 }
 
 export default Input;

@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import fetchWithToken from "./fetchWithToken";
 import { jwtDecode } from "jwt-decode";
+import Input from "@/interface/Input";
 
 export async function logIn(user: User) {
   try {
@@ -39,7 +40,7 @@ export async function logIn(user: User) {
   redirect("/");
 }
 
-export async function addToDo(toDo: { toDo: string }) {
+export async function addToDo(toDo: Input) {
   let token = cookies().get("token");
   if (!token) redirect("/log-in");
 
@@ -68,9 +69,11 @@ export async function addToDo(toDo: { toDo: string }) {
   }
 }
 
-export async function updateToDo(toDo: { toDo: string }, toDoId?: number) {
+export async function updateToDo(toDo: Input, toDoId?: number) {
   let token = cookies().get("token");
   if (!token) redirect("/log-in");
+
+  console.log(toDo);
 
   try {
     const response = await fetchWithToken(
