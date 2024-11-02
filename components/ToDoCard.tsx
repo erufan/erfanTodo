@@ -1,5 +1,6 @@
 import { Button, Card } from "antd";
 import Link from "next/link";
+import DeleteButton from "./DeleteButton";
 
 interface Props {
   toDotitle: string;
@@ -17,7 +18,7 @@ const ToDoCard = ({ toDotitle, isCompleted, userId, toDoid }: Props) => {
           <Link href={`/add-task/${toDoid}`} scroll={false}>
             <Button type="primary"> Edit </Button>
           </Link>
-          <Button style={{ marginLeft: 8 }}>Delete</Button>
+          <DeleteButton toDoid={toDoid} />
         </>
       }
       style={{

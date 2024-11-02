@@ -95,3 +95,32 @@ export async function updateToDo(toDo: { toDo: string }, toDoId?: number) {
     };
   }
 }
+
+export async function deleteToDo(toDoId?: number) {
+  let token = cookies().get("token");
+  if (!token) redirect("/log-in");
+
+  try {
+    const response = await fetchWithToken(
+      `https://dummyjson.com/todos/${toDoId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (response.status === 404) {
+      console.error("To-Do not found");
+      return { success: false, message: "To-Do not found" };
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("Login error:", error);
+    return {
+      success: false,
+      message: "An unknown error occurred. Please try again.",
+    };
+  }
+}
