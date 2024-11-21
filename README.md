@@ -1,0 +1,1 @@
+This project originated as a code challenge during one of my interviews, which involved using a mock database and authentication. I have decided to cherry-pick my contributions and enhance the project by implementing a real database and authentication system. You can find the code for the original challenge here: https://gitlab.com/erufan/pardik-cc
