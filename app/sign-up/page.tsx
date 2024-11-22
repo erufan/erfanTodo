@@ -45,7 +45,7 @@ const SignUpPage = () => {
       </Item>
       <Item
         name="password"
-        rules={[{ len: 8, message: "at least must be 3 character" }]}
+        rules={[{ min: 8, message: "at least must be 8 character" }]}
       >
         <Input
           prefix={<LockOutlined />}
@@ -55,7 +55,7 @@ const SignUpPage = () => {
       </Item>
       {!isValidCredential(formState) &&
         Object.keys(formState).map((error) => (
-          <Item>
+          <Item key={error}>
             <Alert
               message={formState[error as keyof UserCredentialErrors]}
               type="error"
