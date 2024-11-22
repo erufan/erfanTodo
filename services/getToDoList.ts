@@ -1,5 +1,6 @@
 import ToDo from "@/interface/ToDo";
 import fetchWithToken from "./fetchWithToken";
+import { env } from "process";
 
 interface Data {
   todos: ToDo[];
@@ -8,14 +9,13 @@ interface Data {
   limit: number;
 }
 
-const getToDoList = async () => {
-  const respone = await fetchWithToken(
-    "https://dummyjson.com/todos?limit=300&skip=0"
-  ); // I know this isn't efficient, but due to the mock database and constant of only 254 todos, this should suffice for now.
-
+const getToDoList = async (skip: number, limit: number) => {
+  const respone = await fetch(
+    `${process.env.SITE_URL}/api/todos?skip=${skip}&limit=${limit}`
+  );
   const data: Data = await respone.json();
 
-  return data.todos;
+  return data;
 };
 
 export default getToDoList;

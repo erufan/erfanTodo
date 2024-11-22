@@ -1,11 +1,12 @@
+import HomePageProp from "@/interface/HomePageProp";
 import HomePage from "./page";
 
-const Test = () => {
+const DefaultHomePage = ({ searchParams }: HomePageProp) => {
   return (
     <>
-      <HomePage />
+      <HomePage searchParams={searchParams} />
     </>
   );
 };
 
-export default Test;
+export default DefaultHomePage;

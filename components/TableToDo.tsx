@@ -1,9 +1,54 @@
 "use client";
-import React from "react";
-import { Button, Table } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { Table, Pagination, Button } from "antd";
 import DeleteButton from "./DeleteButton";
 import ToDo from "@/interface/ToDo";
+import { useEffect, useState } from "react";
+import CustomTableSkeleton from "./CustomTableSkeleton";
+
+interface Props {
+  dataSource: ToDo[];
+  total: number;
+  currentPage: number;
+  pageSize: number;
+}
+
+const TableToDo = ({ dataSource, total, currentPage, pageSize }: Props) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (dataSource) setLoading(false);
+  }, [dataSource]);
+
+  const handlePageChange = (page: number, pageSize: number) => {
+    setLoading(true);
+    router.push(`/?page=${page}&pageSize=${pageSize}`, { scroll: false });
+  };
+  return (
+    <>
+      <CustomTableSkeleton loading={loading} rows={pageSize}>
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          rowKey="id"
+          pagination={false}
+        />
+      </CustomTableSkeleton>
+
+      <Pagination
+        current={currentPage}
+        total={total}
+        pageSize={pageSize}
+        onChange={handlePageChange}
+      />
+    </>
+  );
+};
+
+export default TableToDo;
 
 const columns = [
   {
@@ -40,9 +85,3 @@ const columns = [
     ),
   },
 ];
-
-const TableToDo = ({ dataSource }: { dataSource: ToDo[] }) => {
-  return <Table dataSource={dataSource} columns={columns} rowKey="id" />;
-};
-
-export default TableToDo;
