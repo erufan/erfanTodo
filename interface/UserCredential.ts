@@ -4,6 +4,6 @@ interface UserCredentials {
   password: string;
 }
 
-export interface UserCredentialErrors extends UserCredentials {}
+export interface UserCredentialErrors extends Partial<UserCredentials> {}
 
 export default UserCredentials;

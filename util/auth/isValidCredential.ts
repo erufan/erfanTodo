@@ -1,6 +1,6 @@
 import { UserCredentialErrors } from "@/interface/UserCredential";
 
-const isValidCredential = function (errors: UserCredentialErrors) {
+const isValidCredential = function (errors: UserCredentialErrors | {}) {
   return Object.keys(errors).length === 0;
 };
 
