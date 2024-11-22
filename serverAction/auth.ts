@@ -1,8 +1,12 @@
 "use server";
 import UserCredentials from "@/interface/UserCredential";
+import addUser from "@/lib/addUser";
+import { generateSession } from "@/lib/auth";
 import isUniqueUser from "@/lib/isUniqueUser";
 import isValidCredential from "@/util/auth/isValidCredential";
 import validateSignupCredential from "@/util/auth/validateSignup";
+import bcrypt from "bcrypt";
+import { redirect } from "next/navigation";
 
 export async function signup(
   prevState: UserCredentials,
@@ -13,9 +17,17 @@ export async function signup(
     errors.email = "This email address is not available";
   if (!isValidCredential(errors)) return errors;
 
-  //hash password
-  //store user in data base
-  //have a good day or night
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(formData.password, salt);
+  formData.password = hashedPassword;
 
-  return {};
+  try {
+    const userId: number = await addUser(formData);
+    await generateSession(userId.toString());
+    redirect("/");
+  } catch (error) {
+    console.error(error);
+    errors.unknown = "something went wrong please try again";
+    return errors;
+  }
 }
