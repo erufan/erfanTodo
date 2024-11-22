@@ -20,7 +20,7 @@ const validateSignupCredential = function (userCredentials: UserCredentials) {
     {
       field: "username",
       validate: (value) =>
-        Boolean(value.match(/^[A-Za-z0-9]+$/) && value.length === 0),
+        Boolean(value.match(/^[A-Za-z0-9]+$/) && value.length !== 0),
       message: "pleas enter a valid username",
     },
     {
