@@ -1,0 +1,25 @@
+.responsive-table {
+  width: 100%;
+  table-layout: auto;
+  overflow-x: hidden;
+}
+
+.responsive-table .ant-table-cell {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+@media (max-width: 768px) {
+  .completed-column,
+  .userId-column {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .completed-column,
+  .userId-column,
+  .actions-column {
+    display: none;
+  }
+}
