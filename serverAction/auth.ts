@@ -1,5 +1,7 @@
 "use server";
-import UserCredentials from "@/interface/UserCredential";
+import UserCredentials, {
+  UserCredentialErrors,
+} from "@/interface/UserCredential";
 import addUser from "@/lib/addUser";
 import { generateSession } from "@/lib/auth";
 import isUniqueUser from "@/lib/isUniqueUser";
@@ -9,7 +11,7 @@ import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 
 export async function signup(
-  prevState: UserCredentials,
+  prevState: UserCredentialErrors,
   formData: UserCredentials
 ) {
   const errors = validateSignupCredential(formData);
