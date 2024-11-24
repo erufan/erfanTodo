@@ -4,8 +4,6 @@ import User from "@/interface/User";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import fetchWithToken from "./fetchWithToken";
-import { jwtDecode } from "jwt-decode";
-import Input from "@/interface/Input";
 import authenticateUser from "@/util/authenticateUser";
 
 export async function logIn(user: User) {
@@ -39,34 +37,6 @@ export async function logIn(user: User) {
     };
   }
   redirect("/");
-}
-
-export async function addToDo(toDo: Input) {
-  const token = authenticateUser();
-
-  const { id }: { id: number } = jwtDecode(token.value);
-
-  try {
-    const response = await fetchWithToken("https://dummyjson.com/todos/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...toDo, userId: id }),
-    });
-
-    if (response.status === 401) redirect("/log-in");
-
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    console.error("Login error:", error);
-    return {
-      success: false,
-      message: "An unknown error occurred. Please try again.",
-    };
-  }
 }
 
 export async function deleteToDo(toDoId: number) {

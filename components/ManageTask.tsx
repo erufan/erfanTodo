@@ -37,7 +37,7 @@ const ManageTask = <T extends ToDo>({
     if (data.message) setUserResponse(data.message);
     else {
       setUserResponse("The operation was successful 💹");
-      setTimeout(() => router.back(), 2000);
+      setTimeout(() => router.back(), 1000);
     }
   }
 

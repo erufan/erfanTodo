@@ -1,3 +1,4 @@
+import ToDo from "@/interface/ToDo";
 import { sql } from "@vercel/postgres";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,4 +20,14 @@ export async function GET(req: NextRequest) {
   const response = new NextResponse(JSON.stringify(result), {});
 
   return response;
+}
+
+export async function POST(req: NextRequest) {
+  const newTodo: ToDo = await req.json();
+  console.log(typeof newTodo.userId);
+
+  await sql`INSERT INTO todos (todo,"userId") 
+           VALUES(${newTodo.todo},${newTodo.userId})`;
+
+  return NextResponse.json("");
 }
