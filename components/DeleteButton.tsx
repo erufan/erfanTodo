@@ -1,5 +1,5 @@
 "use client";
-import { deleteToDo } from "@/services/actions";
+import deleteToDo from "@/serverAction/mutations/deleteToDo";
 import { Button } from "antd";
 import { useState } from "react";
 

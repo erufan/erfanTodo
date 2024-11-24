@@ -27,3 +27,14 @@ export async function PATCH(
 
   return NextResponse.json("");
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params: { id } }: { params: { id: number } }
+) {
+  const todo = await sql`DELETE FROM todos WHERE id=${id}`;
+
+  if (todo.rowCount === 0) return NextResponse.json({}, { status: 404 });
+
+  return NextResponse.json("");
+}
