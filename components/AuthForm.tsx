@@ -5,8 +5,13 @@ import { useFormState } from "react-dom";
 import { signup } from "@/serverAction/auth";
 import isValidCredential from "@/util/auth/isValidCredential";
 import { UserCredentialErrors } from "@/interface/UserCredential";
+import Link from "next/link";
 
-const SignUpPage = () => {
+interface Props {
+  param: "log-in" | "sign-up";
+}
+
+const AuthForm = ({ param }: Props) => {
   const [formState, formAction] = useFormState(signup, {});
   const { Item } = Form;
 
@@ -31,18 +36,20 @@ const SignUpPage = () => {
         <Input prefix={<MailOutlined />} placeholder="email" />
       </Item>
 
-      <Item
-        name="username"
-        rules={[
-          {
-            pattern: /^[A-Za-z0-9]+$/,
-            message: "no special character allowed",
-          },
-          { required: true, message: "Please input your Username!" },
-        ]}
-      >
-        <Input prefix={<UserOutlined />} placeholder="Username" />
-      </Item>
+      {param === "sign-up" && (
+        <Item
+          name="username"
+          rules={[
+            {
+              pattern: /^[A-Za-z0-9]+$/,
+              message: "no special character allowed",
+            },
+            { required: true, message: "Please input your Username!" },
+          ]}
+        >
+          <Input prefix={<UserOutlined />} placeholder="Username" />
+        </Item>
+      )}
       <Item
         name="password"
         rules={[{ min: 8, message: "at least must be 8 character" }]}
@@ -65,11 +72,18 @@ const SignUpPage = () => {
         ))}
       <Item style={{ display: "flex", justifyContent: "center" }}>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Sign Up
+          {param === "sign-up" ? "Sign Up" : "log In"}
         </Button>
+      </Item>
+      <Item style={{ display: "flex", justifyContent: "center" }}>
+        {param === "sign-up" ? (
+          <Link href="/log-in">already have account?</Link>
+        ) : (
+          <Link href="/sign-up">create an account</Link>
+        )}
       </Item>
     </Form>
   );
 };
 
-export default SignUpPage;
+export default AuthForm;
