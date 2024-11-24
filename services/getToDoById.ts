@@ -1,9 +1,11 @@
 import ToDo from "@/interface/ToDo";
-import fetchWithToken from "./fetchWithToken";
+
 import { notFound } from "next/navigation";
 
 const getToDoList = async (id: string) => {
-  const response = await fetchWithToken(`https://dummyjson.com/todos/${id}`);
+  const response = await fetch(`${process.env.SITE_URL}/api/todos/${id}`, {
+    next: { tags: [id] },
+  });
 
   if (response.status === 404) notFound();
 

@@ -69,33 +69,6 @@ export async function addToDo(toDo: Input) {
   }
 }
 
-export async function updateToDo(toDo: Input, toDoId?: number) {
-  authenticateUser();
-
-  try {
-    const response = await fetchWithToken(
-      `https://dummyjson.com/todos/${toDoId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(toDo),
-      }
-    );
-
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    console.error("Login error:", error);
-    return {
-      success: false,
-      message: "An unknown error occurred. Please try again.",
-    };
-  }
-}
-
 export async function deleteToDo(toDoId: number) {
   authenticateUser();
   try {

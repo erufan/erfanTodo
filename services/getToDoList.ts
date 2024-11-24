@@ -11,7 +11,8 @@ interface Data {
 
 const getToDoList = async (skip: number, limit: number) => {
   const respone = await fetch(
-    `${process.env.SITE_URL}/api/todos?skip=${skip}&limit=${limit}`
+    `${process.env.SITE_URL}/api/todos?skip=${skip}&limit=${limit}`,
+    { next: { tags: ["todos"] } }
   );
   const data: Data = await respone.json();
 
