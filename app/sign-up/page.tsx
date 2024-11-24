@@ -1,6 +1,6 @@
 "use client";
 import { Form, Input, Button, Alert } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useFormState } from "react-dom";
 import { signup } from "@/serverAction/auth";
 import isValidCredential from "@/util/auth/isValidCredential";
@@ -28,7 +28,7 @@ const SignUpPage = () => {
           },
         ]}
       >
-        <Input prefix={<UserOutlined />} placeholder="email" />
+        <Input prefix={<MailOutlined />} placeholder="email" />
       </Item>
 
       <Item

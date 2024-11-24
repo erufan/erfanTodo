@@ -11,9 +11,10 @@ import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 
 export async function signup(
-  prevState: UserCredentialErrors,
+  prevState: UserCredentialErrors | {},
   formData: UserCredentials
 ) {
+  let redirectPath: string | null = null;
   const errors = validateSignupCredential(formData);
   if (!(await isUniqueUser(formData.email)))
     errors.email = "This email address is not available";
@@ -24,12 +25,15 @@ export async function signup(
   formData.password = hashedPassword;
 
   try {
+    redirectPath = `/`;
     const userId: number = await addUser(formData);
     await generateSession(userId.toString());
-    redirect("/");
+    return {};
   } catch (error) {
     console.error(error);
     errors.unknown = "something went wrong please try again";
     return errors;
+  } finally {
+    if (redirectPath) redirect(redirectPath);
   }
 }
