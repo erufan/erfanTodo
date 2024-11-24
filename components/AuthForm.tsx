@@ -2,7 +2,7 @@
 import { Form, Input, Button, Alert } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useFormState } from "react-dom";
-import { signup } from "@/serverAction/auth";
+import { login, signup } from "@/serverAction/auth";
 import isValidCredential from "@/util/auth/isValidCredential";
 import { UserCredentialErrors } from "@/interface/UserCredential";
 import Link from "next/link";
@@ -12,7 +12,8 @@ interface Props {
 }
 
 const AuthForm = ({ param }: Props) => {
-  const [formState, formAction] = useFormState(signup, {});
+  let authAction = param === "sign-up" ? signup : login;
+  const [formState, formAction] = useFormState(authAction, {});
   const { Item } = Form;
 
   return (
