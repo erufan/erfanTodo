@@ -32,7 +32,7 @@ const validateSignupCredential = function (userCredentials: UserCredentials) {
 
   validateRules.forEach((rule) => {
     const credential = userCredentials[rule.field];
-    if (!rule.validate(credential)) errors[rule.field] = rule.message;
+    if (!rule.validate(credential!)) errors[rule.field] = rule.message;
   });
 
   return errors;

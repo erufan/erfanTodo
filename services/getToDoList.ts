@@ -1,6 +1,4 @@
 import ToDo from "@/interface/ToDo";
-import fetchWithToken from "./fetchWithToken";
-import { env } from "process";
 
 interface Data {
   todos: ToDo[];
