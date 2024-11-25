@@ -26,7 +26,7 @@ export async function generateSession(userId: string) {
   );
 }
 
-export const verifyAuth = cache(async function () {
+export const verifyAuth = async function () {
   const sessionCookie = cookies().get(lucia.sessionCookieName);
   if (!sessionCookie)
     return {
@@ -64,4 +64,4 @@ export const verifyAuth = cache(async function () {
   } catch {}
 
   return result;
-});
+};
