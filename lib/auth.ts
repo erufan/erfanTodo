@@ -2,7 +2,7 @@ import { NodePostgresAdapter } from "@lucia-auth/adapter-postgresql";
 import { Lucia } from "lucia";
 import { cookies } from "next/headers";
 import { db } from "@vercel/postgres";
-import { cache } from "react";
+import { NextRequest } from "next/server";
 
 const adapter = new NodePostgresAdapter(db, {
   user: "todousers",
@@ -62,6 +62,25 @@ export const verifyAuth = async function () {
       );
     }
   } catch {}
+
+  return result;
+};
+
+export const verifyApiAuth = async function (req: NextRequest) {
+  const authorizationHeader = req.headers.get("Authorization");
+  const sessionId = lucia.readBearerToken(authorizationHeader ?? "");
+  if (!sessionId)
+    return {
+      user: null,
+      session: null,
+    };
+
+  const result = await lucia.validateSession(sessionId);
+  if (!result.user || !result.session)
+    return {
+      user: null,
+      session: null,
+    };
 
   return result;
 };

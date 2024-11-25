@@ -1,7 +1,7 @@
 import ManageTask from "@/components/ManageTask";
 import { verifyAuth } from "@/lib/auth";
 import updateToDo from "@/serverAction/mutations/updateToDo";
-import getToDo from "@/services/getToDoById";
+import getToDoById from "@/services/getToDoById";
 import { redirect } from "next/navigation";
 
 interface Props {
@@ -14,7 +14,7 @@ const ToDoDetailsPage = async ({ params }: Props) => {
     return redirect("/log-in");
   }
 
-  const toDo = await getToDo(params.id);
+  const toDo = await getToDoById(params.id);
 
   return <ManageTask serverAction={updateToDo} defaultValus={toDo} />;
 };
