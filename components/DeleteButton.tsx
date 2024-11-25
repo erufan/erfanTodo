@@ -22,7 +22,6 @@ const DeleteButton = ({ toDoid }: { toDoid: number }) => {
     try {
       const result = await deleteToDo(toDoid);
       setIsDeleted(true);
-      console.log("To-Do deleted successfully:", result);
     } catch (error) {
       console.error("Error deleting To-Do:", error);
     }

@@ -18,7 +18,6 @@ async function addToDo(toDo: Input) {
         body: JSON.stringify({ ...toDo, userId: resultVerify.user?.id }),
       }
     );
-    console.log(response);
 
     const data = await response.json();
 
