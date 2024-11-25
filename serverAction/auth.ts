@@ -45,7 +45,8 @@ export async function login(
   let redirectPath: string | null = null;
   const errors = {} as UserCredentialErrors;
   const user = await existingUser(formData.email);
-  if (!user) errors.email = "wrong credential, try agian";
+  if (!user) errors.email = "wrong credential,X try agian";
+  if (!isValidCredential(errors)) return errors;
   const isExistingPassword = await bcrypt.compare(
     formData.password,
     user!.password
