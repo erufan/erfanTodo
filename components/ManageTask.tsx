@@ -58,6 +58,18 @@ const ManageTask = <T extends ToDo>({
       open
       onClick={router.back}
     >
+      {loading && (
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 3,
+          }}
+          onClick={(e) => e.stopPropagation()}
+        />
+      )}
       <Form
         name="login_form"
         className="login-form"
@@ -73,6 +85,8 @@ const ManageTask = <T extends ToDo>({
           boxShadow: "0 0 10px 0 #181817",
           maxWidth: "50rem",
           width: "100%",
+          position: "relative",
+          zIndex: 4,
         }}
         onClick={(e) => e.stopPropagation()}
       >
