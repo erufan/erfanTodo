@@ -3,7 +3,7 @@ import UserCredentials, {
   UserCredentialErrors,
 } from "@/interface/UserCredential";
 import addUser from "@/lib/addUser";
-import { generateSession } from "@/lib/auth";
+import { destroySession, generateSession } from "@/lib/auth";
 import existingUser from "@/lib/existingUser";
 import isValidCredential from "@/util/auth/isValidCredential";
 import validateSignupCredential from "@/util/auth/validateSignup";
@@ -45,7 +45,7 @@ export async function login(
   let redirectPath: string | null = null;
   const errors = {} as UserCredentialErrors;
   const user = await existingUser(formData.email);
-  if (!user) errors.email = "wrong credential,X try agian";
+  if (!user) errors.email = "wrong credential, try agian";
   if (!isValidCredential(errors)) return errors;
   const isExistingPassword = await bcrypt.compare(
     formData.password,
@@ -65,4 +65,8 @@ export async function login(
   } finally {
     if (redirectPath) redirect(redirectPath);
   }
+}
+
+export async function logout() {
+  await destroySession();
 }

@@ -1,4 +1,4 @@
-import LogOutButton from "@/components/LogOutButton";
+import LogOut_InButton from "@/components/LogOutButton";
 import AddToDoLink from "@/components/AddToDoLink";
 import TableToDo from "@/components/TableToDo";
 import getToDoList from "@/services/getToDoList";
@@ -17,7 +17,7 @@ export default async function HomePage({ searchParams }: HomePageProp) {
 
   return (
     <>
-      <LogOutButton />
+      <LogOut_InButton isUser={Boolean(user)} />
       <TableToDo
         dataSource={data.todos}
         total={data.total}

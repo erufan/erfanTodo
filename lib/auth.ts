@@ -84,3 +84,17 @@ export const verifyApiAuth = async function (req: NextRequest) {
 
   return result;
 };
+
+export const destroySession = async function () {
+  const { session } = await verifyAuth();
+  if (!session) throw new Error("not allowed");
+
+  await lucia.invalidateSession(session.id);
+
+  const sessionCookie = lucia.createBlankSessionCookie();
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  );
+};
