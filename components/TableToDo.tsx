@@ -13,11 +13,60 @@ interface Props {
   total: number;
   currentPage: number;
   pageSize: number;
+  isUser: boolean;
 }
 
-const TableToDo = ({ dataSource, total, currentPage, pageSize }: Props) => {
+const TableToDo = ({
+  dataSource,
+  total,
+  currentPage,
+  pageSize,
+  isUser,
+}: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+
+  const columns = [
+    {
+      title: "Todo",
+      dataIndex: "todo",
+      key: "todo",
+      sorter: (a: ToDo, b: ToDo) => a.todo.localeCompare(b.todo),
+    },
+    {
+      title: "Completed",
+      dataIndex: "completed",
+      key: "completed",
+      render: (_: any, record: ToDo) => (record.completed ? "✅" : "❌"),
+      sorter: (a: ToDo, b: ToDo) => Number(a.completed) - Number(b.completed),
+    },
+    {
+      title: "User ID",
+      dataIndex: "userId",
+      key: "userId",
+      sorter: (a: ToDo, b: ToDo) => a.userId - b.userId,
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (_: any, record: ToDo) => (
+        <>
+          {isUser ? (
+            <>
+              <Link href={`/add-task/${record.id}`} scroll={false}>
+                <Button type="primary" style={{ marginRight: 8 }}>
+                  Edit
+                </Button>
+              </Link>
+              <DeleteButton toDoid={record.id} />
+            </>
+          ) : (
+            <span>for mutation you have to log in</span>
+          )}
+        </>
+      ),
+    },
+  ];
 
   useEffect(() => {
     if (dataSource) setLoading(false);
@@ -49,39 +98,3 @@ const TableToDo = ({ dataSource, total, currentPage, pageSize }: Props) => {
 };
 
 export default TableToDo;
-
-const columns = [
-  {
-    title: "Todo",
-    dataIndex: "todo",
-    key: "todo",
-    sorter: (a: ToDo, b: ToDo) => a.todo.localeCompare(b.todo),
-  },
-  {
-    title: "Completed",
-    dataIndex: "completed",
-    key: "completed",
-    render: (_: any, record: ToDo) => (record.completed ? "✅" : "❌"),
-    sorter: (a: ToDo, b: ToDo) => Number(a.completed) - Number(b.completed),
-  },
-  {
-    title: "User ID",
-    dataIndex: "userId",
-    key: "userId",
-    sorter: (a: ToDo, b: ToDo) => a.userId - b.userId,
-  },
-  {
-    title: "Actions",
-    key: "actions",
-    render: (_: any, record: ToDo) => (
-      <>
-        <Link href={`/add-task/${record.id}`} scroll={false}>
-          <Button type="primary" style={{ marginRight: 8 }}>
-            Edit
-          </Button>
-        </Link>
-        <DeleteButton toDoid={record.id} />
-      </>
-    ),
-  },
-];

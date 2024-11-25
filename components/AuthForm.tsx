@@ -15,7 +15,6 @@ const AuthForm = ({ param }: Props) => {
   let authAction = param === "sign-up" ? signup : login;
   const [formState, formAction] = useFormState(authAction, {});
   const { Item } = Form;
-
   return (
     <Form
       name="login_form"
@@ -24,6 +23,7 @@ const AuthForm = ({ param }: Props) => {
       style={{ maxWidth: "300px", margin: "auto", paddingTop: "50px" }}
       onFinish={formAction}
     >
+      {param === "log-in" && <Item>for mutation you have to log in</Item>}
       <Item
         name="email"
         rules={[

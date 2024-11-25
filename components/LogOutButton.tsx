@@ -1,13 +1,11 @@
 "use client";
 import { Button } from "antd";
 import { useRouter } from "next/navigation";
-import { logOut } from "@/services/actions";
 
 const LogOutButton = () => {
   const router = useRouter();
 
   const handleLogOut = () => {
-    logOut();
     router.push("/log-in");
   };
 

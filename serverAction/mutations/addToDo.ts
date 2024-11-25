@@ -1,20 +1,20 @@
 "use server";
 
 import Input from "@/interface/Input";
+import { verifyAuth } from "@/lib/auth";
 import { revalidateTag } from "next/cache";
 
 async function addToDo(toDo: Input) {
+  const resultVerify = await verifyAuth();
+
   try {
     const response = await fetch(`${process.env.SITE_URL}/api/todos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...toDo, userId: 1 }),
+      body: JSON.stringify({ ...toDo, userId: resultVerify.user?.id }),
     });
-    //1 is hard coded should change after implment real auth
-
-    // if (response.status === 401) redirect("/log-in");
 
     const data = await response.json();
 
